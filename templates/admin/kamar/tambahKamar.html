@@ -1,0 +1,27 @@
+{% extends './components/base.html' %} 
+
+{% block head %}
+<title>TAMBAH KAMAR</title>
+{% endblock %}
+
+{% block body %}
+{% include './components/navbar.html' %}
+<h1>HALAMAN TAMBAH KAMAR</h1>
+
+<form method="POST" action="" class="">
+    <label for="kode_kamar">Kode Kamar</label>
+    <input type="text" name="kode_kamar" id="" required maxlength="100">
+
+    <label for="nama_kamar">Nama Kamar</label>
+    <input type="text" name="nama_kamar" id="" required maxlength="100">
+
+    <label for="harga_kamar">Harga Kamar</label>
+    <input type="number" name="harga_kamar" id="" required min="0">
+
+    <label for="jumlah_kamar">Jumlah Kamar</label>
+    <input type="number" name="jumlah_kamar" id="" required min="0">
+
+    <button type="submit">SUBMIT</button>
+    <button type="reset">RESET</button>
+</form>
+{% endblock %}

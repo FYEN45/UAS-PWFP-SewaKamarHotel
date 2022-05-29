@@ -6,12 +6,12 @@
 	</div>
 
 	<div>
-		<a href="{{ url_for('tentangKami') }}">Tentang Kami</a>
-		
 		{% if session['user'] %}
 			<a href="{{ url_for('home') }}">HOME</a>
+			<a href="{{ url_for('tentangKami') }}">Tentang Kami</a>
 			<a href="{{ url_for('logout') }}">LOGOUT</a>
 		{% else %}
+			<a href="{{ url_for('tentangKami') }}">Tentang Kami</a>
 			<a href="{{ url_for('login') }}">LOGIN</a>
 		{% endif %}
 	</div>

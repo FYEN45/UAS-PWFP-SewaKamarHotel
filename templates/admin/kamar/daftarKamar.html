@@ -1,0 +1,36 @@
+{% extends './components/base.html' %} 
+
+{% block head %}
+<title>Daftar Kamar</title>
+{% endblock %}
+
+{% block body %}
+{% include './components/navbar.html' %}
+<h1>HALAMAN DAFTAR KAMAR</h1>
+
+<table>
+    <tr>
+        <th>Kode Kamar</th>
+        <th>Nama Kamar</th>
+        <th>Harga Kamar</th>
+        <th>Jumlah Kamar</th>
+        <th>Kamar Tersedia</th>
+        <th>ACTION</th>
+    </tr>
+
+    {% for data in container %}
+    <tr>
+        <td>{{ data[0] }}</td>
+        <td>{{ data[1] }}</td>
+        <td>{{ data[2] }}</td>
+        <td>{{ data[3] }}</td>
+        <td>{{ data[4] }}</td>
+        <td>
+            <a href="#">Edit</a>
+            <a href="#">Hapus</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

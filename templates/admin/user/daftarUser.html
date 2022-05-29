@@ -1,0 +1,35 @@
+{% extends './components/base.html' %} 
+
+{% block head %}
+<title>Daftar User</title>
+{% endblock %}
+
+{% block body %}
+{% include './components/navbar.html' %}
+<h1>HALAMAN DAFTAR USER</h1>
+
+<table>
+    <tr>
+        <th>Nama</th>
+        <th>No Telepon</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>ACTION</th>
+    </tr>
+
+    {% for data in container %}
+    <tr>
+        <td>{{ data[1] }}</td>
+        <td>{{ data[2] }}</td>
+        <td>{{ data[3] }}</td>
+        <td>{{ data[5] }}</td>
+        <td>
+            <a href="#">Edit</a>
+            <a href="#">Hapus</a>
+            <a href="#">BLAST</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

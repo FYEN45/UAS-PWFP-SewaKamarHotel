@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = '@#$123456&*()'
 
 # Session Lifetime
-app.permanent_session_lifetime = timedelta(minutes=5)
+app.permanent_session_lifetime = timedelta(minutes=10)
 
 # Koneksi MYSQL (Tanpa SQLAlchemy)
 # Mempersiapkan koneksi dengan server mysql.
@@ -34,10 +34,77 @@ def tentangKami():
 # ------------------------------------------------------------------------------------------------------------------------------------------------------ 
 @app.route('/home')
 def home():
-    if session['status'] == "CLIENT":
-        return render_template('client/berandaClient.html')
-    else:
-        return render_template('admin/berandaAdmin.html')
+    if 'user' in session: 
+        if session['status'] == "CLIENT":
+            return render_template('client/berandaClient.html')
+        elif session['status'] == "ADMIN":
+            return render_template('admin/berandaAdmin.html')
+
+    return redirect('/login')
+
+# ------------------------------------------------------------------------------------------------------------------------------------------------------
+# CRUD USER
+# ------------------------------------------------------------------------------------------------------------------------------------------------------ 
+@app.route('/daftarUser', methods = ['GET', 'POST'])
+def daftarUser():
+    if 'user' in session:
+        if session['status'] == "ADMIN":
+            cursor = mysql.connection.cursor()
+            cursor.execute('SELECT * FROM user')
+            hasil = cursor.fetchall()
+        
+            cursor.close()
+            return render_template('admin/user/daftarUser.html', container = hasil)
+    
+    return redirect('/login')
+
+# ------------------------------------------------------------------------------------------------------------------------------------------------------
+# CRUD KAMAR
+# ------------------------------------------------------------------------------------------------------------------------------------------------------ 
+@app.route('/daftarKamar', methods = ['GET', 'POST'])
+def daftarKamar():
+    if 'user' in session:
+        if session['status'] == "ADMIN":
+            cursor = mysql.connection.cursor()
+            cursor.execute('SELECT * FROM kamar')
+            hasil = cursor.fetchall()
+        
+            cursor.close()
+            return render_template('admin/kamar/daftarKamar.html', container = hasil)
+    
+    return redirect('/login')
+
+@app.route('/tambahKamar', methods=['GET', 'POST'])
+def tambahKamar():
+    if 'user' in session:
+        if session['status'] == "ADMIN":
+            if (request.method == 'POST'):
+                try:
+                    # Menangambil input form
+                    kamar = request.form
+                    kode_kamar = kamar['kode_kamar']
+                    nama_kamar = kamar['nama_kamar']
+                    harga_kamar =  kamar['harga_kamar']
+                    jumlah_kamar = kamar['jumlah_kamar']
+                    kamar_tersedia = jumlah_kamar
+
+                    # Menghubungkan ke database dan melakukan INSERT pada tabel anggota
+                    cursor = mysql.connection.cursor()
+                    cursor.execute('INSERT INTO kamar(kode_kamar, nama_kamar, harga_kamar, jumlah_kamar, kamar_tersedia) VALUES(%s, %s, %s, %s, %s)', (kode_kamar, nama_kamar, harga_kamar, jumlah_kamar, kamar_tersedia))
+                    mysql.connection.commit()
+                    cursor.close()
+                    
+                    flash('Berhasil menambahkan kamar!')
+                    return redirect('/daftarKamar')
+                
+                except (MySQLdb.Error) as err:
+                    # Menangkap error dan menampilkan pesan gagal
+                    flash('Gagal menambahkan kamar! %d: %s' % (err.args[0], err.args[1]))
+                    return redirect('/daftarKamar')
+
+            return render_template('admin/kamar/tambahKamar.html')
+
+    return redirect('/login')
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------
 # LOGIN, LOGOUT & REGISTER
@@ -47,7 +114,7 @@ def login():
     if (request.method == "POST"):
         # Mengambil input form login
         datalogin = request.form
-        email = datalogin['email'].lower()
+        email = datalogin['email'].lower().strip()
         password = datalogin['password']
 
         # Melakukan SELECT untuk memeriksa apakah username dan password ada dalam database
@@ -81,9 +148,9 @@ def register():
         try:
             # Menangambil input form
             user = request.form
-            nama = user['nama'].title()
-            no_telepon = user['notelp']
-            email = user['email'].lower()
+            nama = user['nama'].title().strip()
+            no_telepon = user['notelp'].strip()
+            email = user['email'].lower().strip()
             password = user['password']
             status = 'CLIENT'
 
