@@ -1,12 +1,19 @@
 {% block navbar %}
 <div>
 	<div>
-		<span>LOGO</span>
+		<a href="{{ url_for('index') }}">LOGO HOTEL</a>
+		{{ session['user'] }} {{ session['status'] }}
 	</div>
 
 	<div>
-		<a href="#">Tentang Kami</a>
-		<a href="#">LOGIN</a>
+		<a href="{{ url_for('tentangKami') }}">Tentang Kami</a>
+		
+		{% if session['user'] %}
+			<a href="{{ url_for('home') }}">HOME</a>
+			<a href="{{ url_for('logout') }}">LOGOUT</a>
+		{% else %}
+			<a href="{{ url_for('login') }}">LOGIN</a>
+		{% endif %}
 	</div>
 </div>
 

@@ -1,21 +1,20 @@
 {% extends './components/base.html' %} 
 
 {% block head %}
-<title>LOGIN</title>
+<title>REGISTER</title>
 {% endblock %}
 
 {% block body %}
 {% include './components/navbar.html' %}
-
-{% with messages = get_flashed_messages() %}
-    {% if messages %}
-      <div class="alert alert-danger p-3"><h4 class="p-0 m-0">{{ messages[0] }}</h4></div>
-    {% endif %}
-{% endwith %}
-
-<h1>HALAMAN LOGIN</h1>
+<h1>HALAMAN REGISTER</h1>
 
 <form method="POST" action="" class="">
+    <label for="nama">NAMA</label>
+    <input type="text" name="nama" id="" required maxlength="100">
+
+    <label for="notelp">NO TELEPON</label>
+    <input type="text" name="notelp" id="" required maxlength="100">
+
     <label for="email">EMAIL</label>
     <input type="email" name="email" id="" required maxlength="100">
 
@@ -25,7 +24,4 @@
     <button type="submit">SUBMIT</button>
     <button type="reset">RESET</button>
 </form>
-
-<a href="{{ url_for('register') }}">REGISTER</a>
-
 {% endblock %}
