@@ -1,11 +1,11 @@
 # Cara untuk mempersiapkan dan menjalankan project
 - Pull dari github / download project
-- Pindah ke directory project                                   [$ cd ...]
-- Bikin virtual env (jika belum ada),                           [$ python -m venv env]
-- Aktifin scripts                                               [$ env/Scripts/activate]
-- Donlod smua requirements project (ada dalem requirements.txt) [$ pip install -r requirements.txt]
-- Setup project flask                                           [$ set NamaProject=app.py]
-- Menjalankan project project                                   [$ flask run] atau [$ python app.py]
+- Pindah ke directory project                                   ``[$ cd ...]``
+- Bikin virtual env (jika belum ada),                           ``[$ python -m venv env]``
+- Aktifin scripts                                               ``[$ env/Scripts/activate]``
+- Donlod smua requirements project (ada dalem requirements.txt) ``[$ pip install -r requirements.txt]``
+- Setup project flask                                           ``[$ set NamaProject=app.py]``
+- Menjalankan project project                                   ``[$ flask run]`` atau ``[$ python app.py]``
 
 # Database ( Menggunakan XAMPP )
 - Dalam folder project ada folder database
