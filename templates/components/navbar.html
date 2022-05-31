@@ -2,11 +2,11 @@
 <div>
 	<div>
 		<a href="{{ url_for('index') }}">LOGO HOTEL</a>
-		{{ session['user'] }} {{ session['status'] }}
+		{{ session['nama_user'] }} {{ session['status'] }}
 	</div>
 
 	<div>
-		{% if session['user'] %}
+		{% if session['nama_user'] %}
 			<a href="{{ url_for('home') }}">HOME</a>
 			<a href="{{ url_for('tentangKami') }}">Tentang Kami</a>
 			<a href="{{ url_for('logout') }}">LOGOUT</a>

@@ -34,7 +34,7 @@ def tentangKami():
 # ------------------------------------------------------------------------------------------------------------------------------------------------------ 
 @app.route('/home')
 def home():
-    if 'user' in session: 
+    if 'nama_user' in session: 
         if session['status'] == "CLIENT":
             return render_template('client/berandaClient.html')
         elif session['status'] == "ADMIN":
@@ -45,9 +45,11 @@ def home():
 # ------------------------------------------------------------------------------------------------------------------------------------------------------
 # CRUD USER
 # ------------------------------------------------------------------------------------------------------------------------------------------------------ 
-@app.route('/daftarUser', methods = ['GET', 'POST'])
+
+# DAFTAR USER - ADMIN
+@app.route('/daftarUser')
 def daftarUser():
-    if 'user' in session:
+    if 'nama_user' in session:
         if session['status'] == "ADMIN":
             cursor = mysql.connection.cursor()
             cursor.execute('SELECT * FROM user')
@@ -61,9 +63,11 @@ def daftarUser():
 # ------------------------------------------------------------------------------------------------------------------------------------------------------
 # CRUD KAMAR
 # ------------------------------------------------------------------------------------------------------------------------------------------------------ 
-@app.route('/daftarKamar', methods = ['GET', 'POST'])
+
+# DAFTAR KAMAR - ADMIN
+@app.route('/daftarKamar')
 def daftarKamar():
-    if 'user' in session:
+    if 'nama_user' in session:
         if session['status'] == "ADMIN":
             cursor = mysql.connection.cursor()
             cursor.execute('SELECT * FROM kamar')
@@ -76,7 +80,7 @@ def daftarKamar():
 
 @app.route('/tambahKamar', methods=['GET', 'POST'])
 def tambahKamar():
-    if 'user' in session:
+    if 'nama_user' in session:
         if session['status'] == "ADMIN":
             if (request.method == 'POST'):
                 try:
@@ -88,7 +92,7 @@ def tambahKamar():
                     jumlah_kamar = kamar['jumlah_kamar']
                     kamar_tersedia = jumlah_kamar
 
-                    # Menghubungkan ke database dan melakukan INSERT pada tabel anggota
+                    # Menghubungkan ke database dan melakukan INSERT pada tabel kamar
                     cursor = mysql.connection.cursor()
                     cursor.execute('INSERT INTO kamar(kode_kamar, nama_kamar, harga_kamar, jumlah_kamar, kamar_tersedia) VALUES(%s, %s, %s, %s, %s)', (kode_kamar, nama_kamar, harga_kamar, jumlah_kamar, kamar_tersedia))
                     mysql.connection.commit()
@@ -107,8 +111,162 @@ def tambahKamar():
     return redirect('/login')
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------
+# CRUD RESERVASI
+# ------------------------------------------------------------------------------------------------------------------------------------------------------    
+
+# DAFTAR RESERVASI - ADMIN
+@app.route('/daftarReservasi')
+def daftarReservasi():
+    if 'nama_user' in session:
+        if session['status'] == "ADMIN":
+            cursor = mysql.connection.cursor()
+            cursor.execute('SELECT * FROM reservasi')
+            reservasi = cursor.fetchall()
+
+            cursor.execute('SELECT * FROM statuscheck')
+            status = cursor.fetchall()
+            cursor.close()
+
+            hasil = []
+
+            for x in range(len(reservasi)):
+                hasil.append(reservasi[x] + status[x])
+
+            return render_template('admin/reservasi/daftarReservasi.html', container = hasil)
+
+    return redirect('/login')
+
+# TAMBAH RESERVASI - ADMIN
+@app.route('/tambahReservasi', methods=['GET', 'POST'])
+def tambahReservasi():
+    if 'nama_user' in session:
+        if session['status'] == "ADMIN":
+            if (request.method == 'POST'):
+                hasil = request.form
+                kodeReservasi = hasil['kode_reservasi']
+                kodeUser = hasil['kode_user']
+                kodeKamar = hasil['kode_kamar']
+                tglCheckin = hasil['tglCheckin']
+                jumlahMalam = hasil['jumlah_malam']
+
+                return redirect('/konfirmasiReservasi/{}/{}/{}/{}/{}'.format(kodeReservasi, kodeUser, kodeKamar, tglCheckin, jumlahMalam))
+
+            cursor = mysql.connection.cursor()
+            cursor.execute('SELECT * FROM kamar')
+            kamar = cursor.fetchall()
+
+            cursor.execute('SELECT * FROM user WHERE status="CLIENT"')
+            user = cursor.fetchall()
+            cursor.close()
+
+            return render_template('admin/reservasi/tambahReservasi.html', container = [user, kamar])
+        
+        elif session['status'] == "CLIENT":
+            cursor = mysql.connection.cursor()
+            cursor.execute('SELECT * FROM kamar')
+            kamar = cursor.fetchall()
+
+            cursor.execute('SELECT * FROM user WHERE kode_user="{{ session["kode_user"] }}"')
+            user = cursor.fetchall()
+            cursor.close()
+    
+    return redirect('/login')
+
+# KONFIRMASI RESERVASI - ADMIN
+@app.route('/konfirmasiReservasi/<kodeReservasi>/<kodeUser>/<kodeKamar>/<tglCheckin>/<jumlahMalam>', methods=['GET', 'POST'])
+def konfirmasiReservasi(kodeReservasi, kodeUser, kodeKamar, tglCheckin, jumlahMalam):
+    if (request.method == "POST"):
+        hasil = request.form
+        kodeReservasi = hasil['kode_reservasi']
+        kodeUser = hasil['kode_user']
+        kodeKamar = hasil['kode_kamar']
+        tglCheckin = hasil['tglCheckin']
+        jumlahMalam = hasil['jumlahMalam']
+        tglCheckout = hasil['tglCheckout']
+        totalBiaya = hasil['totalBiaya']
+
+        cursor = mysql.connection.cursor()
+        cursor.execute('SELECT * FROM kamar WHERE kode_kamar="{}"'.format(kodeKamar))
+        kamar = cursor.fetchall()
+        cursor.close()
+
+        if (int(kamar[0][4]) >= 1):
+            cursor = mysql.connection.cursor()
+            cursor.execute('INSERT INTO reservasi(kode_reservasi, kode_user, kode_kamar, tgl_checkin, tgl_checkout, jumlah_malam, total_biaya) VALUES(%s, %s, %s, %s, %s, %s, %s)', (kodeReservasi, kodeUser, kodeKamar, tglCheckin, tglCheckout, jumlahMalam, totalBiaya))
+            cursor.execute('INSERT INTO statuscheck(kode_reservasi, isCheckin, isCheckout) VALUES(%s, %s, %s)', (kodeReservasi, "NO", "NO"))
+            cursor.execute('UPDATE kamar SET kamar_tersedia=%s WHERE kode_kamar=%s', (int(kamar[0][4] - 1), kamar[0][0]))
+            mysql.connection.commit()
+            cursor.close()  
+        else:
+            flash('Gagal melakukan Reservasi, tidak ada kamar tersedia!')
+                    
+        flash('Berhasil menambahkan kamar!')
+        return redirect('/daftarReservasi')
+
+    cursor = mysql.connection.cursor()
+    cursor.execute('SELECT * FROM kamar WHERE kode_kamar="{}"'.format(kodeKamar))
+    kamar = cursor.fetchall()
+    cursor.close()
+
+    hargaMalam = kamar[0][2]
+
+    data = [kodeReservasi, kodeUser, kodeKamar, tglCheckin, jumlahMalam, hargaMalam]
+    return render_template('admin/reservasi/konfirmasiReservasi.html', container = data)
+
+# HAPUS RESERVASI - ADMIN
+@app.route('/hapusReservasi/<kodeReservasi>', methods=['GET', 'POST'])
+def hapusReservasi(kodeReservasi):   
+    if 'nama_user' in session:
+        if session['status'] == "ADMIN":
+            cursor = mysql.connection.cursor()
+            cursor.execute('DELETE FROM statuscheck WHERE kode_reservasi=%s', (kodeReservasi,))
+            cursor.execute('DELETE FROM reservasi WHERE kode_reservasi=%s', (kodeReservasi,))
+            mysql.connection.commit()
+            cursor.close()
+
+            return redirect('/daftarReservasi')
+
+    return redirect('/login')
+
+# RESERVASI CHECKIN - ADMIN
+@app.route('/checkin/<kodeReservasi>', methods=['GET', 'POST'])
+def checkin(kodeReservasi):   
+    if 'nama_user' in session:
+        if session['status'] == "ADMIN":
+            cursor = mysql.connection.cursor()
+            cursor.execute('UPDATE statuscheck SET isCheckin=%s WHERE kode_reservasi=%s', ("YES", kodeReservasi))
+            mysql.connection.commit()
+
+            return redirect('/daftarReservasi')
+
+    return redirect('/login')
+
+# RESERVASI CHECKOUT - ADMIN
+@app.route('/checkout/<kodeReservasi>/<kodeKamar>', methods=['GET', 'POST'])
+def checkout(kodeReservasi, kodeKamar):   
+    if 'nama_user' in session:
+        if session['status'] == "ADMIN":
+
+            cursor = mysql.connection.cursor()
+            cursor.execute('SELECT * FROM kamar WHERE kode_kamar="{}"'.format(kodeKamar))
+            kamar = cursor.fetchall()
+    
+            cursor.execute('UPDATE statuscheck SET isCheckout=%s WHERE kode_reservasi=%s', ("YES", kodeReservasi))
+            cursor.execute('UPDATE kamar SET kamar_tersedia=%s WHERE kode_kamar=%s', (int(kamar[0][4] + 1), kamar[0][0]))
+
+            mysql.connection.commit()
+            cursor.close()
+
+            return redirect('/daftarReservasi')
+
+    return redirect('/login')
+
+
+# ------------------------------------------------------------------------------------------------------------------------------------------------------
 # LOGIN, LOGOUT & REGISTER
 # ------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# LOGIN - ADMIN & CLIENT
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
     if (request.method == "POST"):
@@ -126,7 +284,8 @@ def login():
             # Apabila terdapat data username dan password, verifikasi berhasil
             
             session.permanent = True
-            session['user'] = hasil[0][1]
+            session['kode_user'] = hasil[0][0]
+            session['nama_user'] = hasil[0][1]
             session['status'] = hasil[0][5]
         
             flash('Login Berhasil! Welcome %s!' % hasil[0][1])
@@ -137,17 +296,19 @@ def login():
             return render_template('login.html')
     
     else:
-        if 'user' in session:
+        if 'nama_user' in session:
             return redirect('/home')
 
     return render_template('login.html')
 
+# REGISTER
 @app.route('/register', methods = ['GET', 'POST'])
 def register():
     if (request.method == 'POST'):
         try:
             # Menangambil input form
             user = request.form
+            kodeUser = user['kode_user'].lower().strip()
             nama = user['nama'].title().strip()
             no_telepon = user['notelp'].strip()
             email = user['email'].lower().strip()
@@ -156,7 +317,7 @@ def register():
 
             # Menghubungkan ke database dan melakukan INSERT pada tabel anggota
             cursor = mysql.connection.cursor()
-            cursor.execute('INSERT INTO user(nama, no_telepon, email, password, status) VALUES(%s, %s, %s, %s, %s)', (nama, no_telepon, email, password, status))
+            cursor.execute('INSERT INTO user(kode_user, nama, no_telepon, email, password, status) VALUES(%s, %s, %s, %s, %s, %s)', (kodeUser, nama, no_telepon, email, password, status))
             mysql.connection.commit()
             cursor.close()
             
@@ -169,14 +330,17 @@ def register():
             return redirect('/register')
     
     else:
-        if 'user' in session:
+        if 'nama_user' in session:
             return redirect('/home')
 
     return render_template('register.html')
 
+# LOGOUT
 @app.route('/logout')
 def logout():
-    session.pop('user', None)
+    session.pop('_flashes', None)
+    session.pop('kode_user', None)
+    session.pop('nama_user', None)
     session.pop('status', None)
     return redirect(url_for('index'))
 

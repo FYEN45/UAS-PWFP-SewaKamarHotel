@@ -1,0 +1,49 @@
+{% extends './components/base.html' %} 
+
+{% block head %}
+<title>Tambah Reservasi</title>
+{% endblock %}
+
+{% block body %}
+{% include './components/navbar.html' %}
+<h1>HALAMAN TAMBAH RESERVASI</h1>
+
+<form method="POST" action="" class="">
+    <label for="kode_reservasi">Kode Reservasi</label>
+    <input type="text" name="kode_reservasi" id="" required maxlength="100">
+
+    <label for="kode_user">Kode User</label>
+    <select class="" id="" name="kode_user" required>
+        {% for user in container[0] %}
+            <option value={{ user[0] }}> {{ user[0] }} - {{ user[1] }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="kode_kamar">Kode Kamar</label>
+    <select class="" id="" name="kode_kamar" required>
+        {% for kamar in container[1] %}
+            <option value={{ kamar[0] }}> {{ kamar[0] }} - {{ kamar[1] }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="tglCheckin">Tanggal Check-In</label>
+    <input type="date" name="tglCheckin" id="input_checkin" required>
+    
+    <label for="jumlah_malam">Jumlah Malam</label>
+    <input type="number" name="jumlah_malam" id="input_jumlah_malam" required min="1">
+
+    <button type="submit">SUBMIT</button>
+    <button type="reset">RESET</button>
+</form>
+
+<script>
+    let jumlahMalam = document.getElementById("input_jumlah_malam");
+    let totalBiaya = document.getElementById("input_total_biaya");
+    let tanggalCheckin = document.getElementById('input_checkin');
+    
+    tanggalCheckin.valueAsDate = new Date();
+    jumlahMalam.setAttribute('value', 1)
+    
+</script>
+{% endblock %}
+

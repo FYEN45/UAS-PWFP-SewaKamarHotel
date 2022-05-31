@@ -1,0 +1,56 @@
+{% extends './components/base.html' %} 
+
+{% block head %}
+<title>KONFIRMASI RESERVASI</title>
+{% endblock %}
+
+{% block body %}
+{% include './components/navbar.html' %}
+<h1>HALAMAN KONFIRMASI RESERVASI</h1>
+
+{% with data = container %}
+<form action="" method="post">
+    <label for="kode_reservasi">Kode Reservasi</label>
+    <input type="text" name="kode_reservasi" value="{{ data[0] }}">
+
+    <label for="kode_user">Kode User</label>
+    <input type="text" name="kode_user" value="{{ data[1] }}">
+
+    <label for="kode_kamar">Kode Kamar</label>
+    <input type="text" name="kode_kamar" value="{{ data[2] }}">
+
+    <label for="tglCheckin">Tanggal Check-In</label>
+    <input type="date" name="tglCheckin" id="input_tglcheckin" value="{{ data[3] }}">
+
+    <label for="jumlah_malam">Jumlah Malam</label>
+    <input type="number" name="jumlahMalam" id="input_jumlahMalam" value="{{ data[4] }}">
+
+    <label for="tglCheckin">Tanggal Check-Out</label>
+    <input type="date" name="tglCheckout" id="input_tglcheckout">
+
+    <label for="tglCheckin">Total Biaya</label>
+    <input type="number" name="totalBiaya" id="input_totalbiaya">
+
+    <button type="submit">SUBMIT</button>
+</form>
+
+<input type="number" id="input_hargaKamar" value="{{ data[5] }}" style="display: none;">
+
+{% endwith %}
+
+<script>
+    let tglCheckin = new Date(document.getElementById("input_tglcheckin").getAttribute('value'));
+    let jumlahMalam = parseInt(document.getElementById("input_jumlahMalam").getAttribute('value'));
+    let tglCheckout = new Date(tglCheckin)
+    tglCheckout.setDate(tglCheckin.getDate() + jumlahMalam)
+
+    let day = ("0" + tglCheckout.getDate()).slice(-2);
+    let month = ("0" + (tglCheckout.getMonth() + 1)).slice(-2);
+    let tgl = tglCheckout.getFullYear()+"-"+(month)+"-"+(day) ;
+
+    document.getElementById("input_tglcheckout").setAttribute('value', tgl)
+
+    let totalBiaya = parseInt(document.getElementById('input_hargaKamar').getAttribute('value')) * jumlahMalam;
+    document.getElementById("input_totalbiaya").setAttribute('value', totalBiaya)
+</script>
+{% endblock %}
