@@ -1,0 +1,33 @@
+{% extends './components/base.html' %} 
+
+{% block head %}
+<title>EDIT KAMAR</title>
+{% endblock %}
+
+{% block body %}
+{% include './components/navbar.html' %}
+<h1>HALAMAN EDIT KAMAR</h1>
+
+{% with data = container %}
+<form method="POST" action="" class="">
+    <label for="kode_kamar">Kode Kamar</label>
+    <input type="text" name="kode_kamar" id="" required maxlength="100" value="{{ data[0][0] }}">
+
+    <label for="nama_kamar">Nama Kamar</label>
+    <input type="text" name="nama_kamar" id="" required maxlength="100" value="{{ data[0][1] }}">
+
+    <label for="harga_kamar">Harga Kamar</label>
+    <input type="number" name="harga_kamar" id="" required min="0" value="{{ data[0][2] }}">
+
+    <label for="jumlah_kamar">Jumlah Kamar</label>
+    <input type="number" name="jumlah_kamar" id="" required min="0" value="{{ data[0][3] }}">
+
+    <label for="kamar_tersedia">Kamar Tersedia</label>
+    <input type="number" name="kamar_tersedia" id="" required min="0" value="{{ data[0][4] }}">
+
+    <button type="submit">SUBMIT</button>
+    <button type="reset">RESET</button>
+</form>
+{% endwith %}
+
+{% endblock %}

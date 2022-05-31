@@ -8,6 +8,8 @@
 {% include './components/navbar.html' %}
 <h1>HALAMAN DAFTAR KAMAR</h1>
 
+<a href="tambahKamar">Tambah Kamar</a>
+
 <table>
     <tr>
         <th>Kode Kamar</th>
@@ -26,8 +28,8 @@
         <td>{{ data[3] }}</td>
         <td>{{ data[4] }}</td>
         <td>
-            <a href="#">Edit</a>
-            <a href="#">Hapus</a>
+            <a href="editKamar/{{ data[0] }}">Edit</a>
+            <a href="hapusKamar/{{ data[0] }}">Hapus</a>
         </td>
     </tr>
     {% endfor %}
