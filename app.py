@@ -1,7 +1,13 @@
 # Import Library yang dibutuhkanimport MySQLdb
 from datetime import timedelta
+import os
+from smtplib import SMTP
+from urllib import response
+import webbrowser
+import pdfkit
 import MySQLdb
-from flask import Flask, render_template, request, redirect, session, url_for, flash
+from flask import Flask, make_response, render_template, request, redirect, send_file, session, url_for, flash
+from flask_mail import Mail, Message
 from flask_mysqldb import MySQL
 
 app = Flask(__name__)
@@ -20,7 +26,24 @@ app.config['MYSQL_DB'] = 'sewakamarhotel_db'
 
 mysql = MySQL(app)
 
-# Routing website ke halaman Home (index.html)
+# Config untuk Generate PDF
+app.config['PDF_FOLDER'] = os.path.realpath('.') + '/static/document'
+app.config['TEMPLATE_FOLDER'] = os.path.realpath('.') + '/templates'
+
+# Config Email
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'chandrakelvin799@gmail.com'
+app.config['MAIL_PASSWORD'] = '32190041'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
+
+# ------------------------------------------------------------------------------------------------------------------------------------------------------
+# HALAMAN UTAMA / TENTANG KAMI
+# ------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+# Routing website ke Halaman Utama (index.html)
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -387,6 +410,65 @@ def checkout(kodeReservasi, kodeKamar):
 
     return redirect('/login')
 
+# ------------------------------------------------------------------------------------------------------------------------------------------------------
+# GENERATE LAPORAN
+# ------------------------------------------------------------------------------------------------------------------------------------------------------
+@app.route('/generateLaporan')
+def generateLaporan():
+    if 'nama_user' in session:
+        if session['status'] == "ADMIN":
+            try:
+                cursor = mysql.connection.cursor()
+                cursor.execute('SELECT * FROM reservasi')
+                reservasi = cursor.fetchall()
+                cursor.close()
+
+                rendered = render_template('/admin/laporan/laporan.html', container = reservasi, user = session['nama_user'])
+    
+                wkhtmltopdf_path = r"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"
+                config = pdfkit.configuration(wkhtmltopdf = wkhtmltopdf_path)
+                pdf = pdfkit.from_string(rendered, configuration=config)
+
+                response = make_response(pdf)
+                response.headers['Content-Type'] = 'application/pdf'
+                response.headers['Content-Disposition'] = 'attachment; filename = "Laporan Reservasi.pdf"'
+                return response
+            
+            except (MySQLdb.Error) as err:
+                # Menangkap error dan memberikan pesan gagal
+                flash('Gagal men-generate Laporan! %d: %s' % (err.args[0], err.args[1]))
+                return redirect('/home')
+    
+    return redirect('/login')
+
+# ------------------------------------------------------------------------------------------------------------------------------------------------------
+# BLAST EMAIL
+# ------------------------------------------------------------------------------------------------------------------------------------------------------
+@app.route('/sendEmail/<emailPenerima>', methods=['GET', 'POST'])
+def sendEmail(emailPenerima):
+    if 'nama_user' in session:
+        if session['status'] == "ADMIN":
+            if (request.method == 'POST'):
+                data = request.form
+                subject = data['subject']
+                sender = data['sender']
+                isiPesan = data['isiPesan']
+
+                try :
+                    namaHotel = sender
+                    msg = Message(subject, sender = (namaHotel, app.config['MAIL_USERNAME']), recipients = [emailPenerima])
+                    msg.body = isiPesan
+                    mail.send(msg)
+
+                    flash('Email berhasil dikirim!')
+                    return redirect('/daftarUser')
+                except:
+                    flash('Email gagal dikirim!')
+                    return redirect('/daftarUser')
+            
+            return render_template('/admin/email/sendEmail.html', container = emailPenerima)
+        
+    return redirect('/login')
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------
 # LOGIN, LOGOUT & REGISTER
@@ -433,7 +515,7 @@ def login():
 
     return render_template('login.html')
 
-# REGISTER
+# REGISTER - CLIENT
 @app.route('/register', methods = ['GET', 'POST'])
 def register():
     if (request.method == 'POST'):

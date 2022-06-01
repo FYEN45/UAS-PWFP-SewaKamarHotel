@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>LAPORAN RESERVASI</h1>
+    <h2>Dicetak oleh : {{ user }}</h2>
+
+    <table>
+        <tr>
+            <th>Kode Reservasi</th>
+            <th>Kode User</th>
+            <th>Kode Kamar</th>
+            <th>Tgl Check-In</th>
+            <th>Tgl Check-Out</th>
+            <th>Jumlah Malam</th>
+            <th>Total Biaya</th>
+        </tr>
+
+    {% for data in container %}
+    <tr>    
+        <td>{{ data[0] }}</td>
+        <td>{{ data[1] }}</td>
+        <td>{{ data[2] }}</td>
+        <td>{{ data[3] }}</td>
+        <td>{{ data[4] }}</td>
+        <td>{{ data[5] }}</td>
+        <td>{{ data[6] }}</td>
+    </tr>
+    {% endfor %}
+    </table>
+</body>
+
+<script>
+
+</script>
+</html>
+
+

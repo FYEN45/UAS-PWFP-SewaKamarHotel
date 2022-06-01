@@ -1,0 +1,27 @@
+{% extends './components/base.html' %} 
+
+{% block head %}
+<title>SEND EMAIL</title>
+{% endblock %}
+
+{% block body %}
+{% include './components/navbar.html' %}
+<h1>HALAMAN SEND EMAIL</h1>
+
+<form action="" method="post">
+    <label for="sender">Nama Pengirim</label>
+    <input type="text" name="sender" id="" required maxlength="100">
+
+    <label for="subject">Subject</label>
+    <input type="text" name="subject" id="" required maxlength="500">
+
+    <label for="receiver">Penerima</label>
+    <input type="email" name="receiver" id="" required maxlength="100" value="{{ container }}">
+
+    <label for="isiPesan">Isi Pesan</label>
+    <textarea name="isiPesan" id="" cols="30" rows="10"></textarea>
+
+    <button type="submit">KIRIM</button>
+</form>
+
+{% endblock %}
