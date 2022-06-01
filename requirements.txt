@@ -1,7 +1,9 @@
+blinker==1.4
 cachelib==0.7.0
 click==8.0.4
 colorama==0.4.4
 Flask==2.0.3
+Flask-Mail==0.9.1
 Flask-MySQLdb==1.0.1
 Flask-Session==0.4.0
 Flask-SQLAlchemy==2.5.1
@@ -11,6 +13,8 @@ Jinja2==3.0.3
 MarkupSafe==2.1.1
 mysql==0.0.3
 mysqlclient==2.1.0
+pdfkit==1.0.0
 PyMySQL==1.0.2
 SQLAlchemy==1.4.32
 Werkzeug==2.0.3
+wkhtmltopdf==0.2
