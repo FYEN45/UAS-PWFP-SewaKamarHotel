@@ -1,20 +1,22 @@
 {% block navbar %}
-<div>
-	<div>
-		<a href="{{ url_for('index') }}">LOGO HOTEL</a>
-		{{ session['nama_user'] }} {{ session['status'] }}
+<div class="navbar row">
+	<div class="navbar_logo col-4 d-flex align-items-center">
+		<a href="{{ url_for('index') }}">
+			<img src="./../../static/media/Logo_Hotel.png" alt="LOGO HOTEL" srcset="">
+		</a>
 	</div>
 
-	<div>
+	<div class="navbar_link col-8 d-flex justify-content-end align-items-center">
 		{% if session['nama_user'] %}
-			<a href="{{ url_for('home') }}">HOME</a>
-			<a href="{{ url_for('tentangKami') }}">Tentang Kami</a>
-			<a href="{{ url_for('logout') }}">LOGOUT</a>
+			<a class="" href="{{ url_for('home') }}">HOME</a>
+			<a class="ms-4" href="{{ url_for('tentangKami') }}">TENTANG KAMI</a>
+			<a class="ms-4" href="{{ url_for('logout') }}">LOGOUT</a>
 		{% else %}
-			<a href="{{ url_for('tentangKami') }}">Tentang Kami</a>
-			<a href="{{ url_for('login') }}">LOGIN</a>
+			<a class="" href="{{ url_for('tentangKami') }}">TENTANG KAMI</a>
+			<a class="ms-4" href="{{ url_for('login') }}">LOGIN</a>
 		{% endif %}
 	</div>
 </div>
 
+{% include './components/flashMessage.html' %}
 {% endblock %}

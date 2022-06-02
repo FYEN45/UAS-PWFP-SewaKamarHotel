@@ -15,12 +15,15 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
+    <!-- Logo -->
+    <link rel="shortcut icon" type="image/x-icon" href="./../../static/media/Logo_Hotel.png" />
+
     {% block head %} {% endblock %}
 </head>
 <body>
-    <div id="root">
-        {% include './components/flashMessage.html' %}
+    <div id="root" class="container">
         {% block body %}{% endblock %}
+        {% include './components/footer.html' %}
     </div>
 
     <!-- JAVASCRIPT -->

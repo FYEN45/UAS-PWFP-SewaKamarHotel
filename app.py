@@ -1,9 +1,6 @@
 # Import Library yang dibutuhkanimport MySQLdb
 from datetime import timedelta
 import os
-from smtplib import SMTP
-from urllib import response
-import webbrowser
 import pdfkit
 import MySQLdb
 from flask import Flask, make_response, render_template, request, redirect, send_file, session, url_for, flash

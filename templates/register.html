@@ -1,30 +1,69 @@
-{% extends './components/base.html' %} 
+{% extends './components/base.html' %} {% block head %}
+<title>Register</title>
+{% endblock %} {% block body %} {% include './components/navbar.html' %}
+<div class="row register">
+	<h1>Register</h1>
+	<form method="POST" action="" class="form">
+		<div class="mb-3">
+			<label class="form-label" for="nama">NAMA</label>
+			<input
+				class="form-control"
+				type="text"
+				name="nama"
+				id=""
+				required
+				maxlength="100"
+			/>
+		</div>
+		<div class="mb-3">
+			<label class="form-label" for="notelp">NO TELEPON</label>
+			<input
+				class="form-control"
+				type="text"
+				name="notelp"
+				id=""
+				required
+				maxlength="100"
+			/>
+		</div>
+		<div class="mb-3">
+			<label class="form-label" for="kode_user">USERNAME</label>
+			<input
+				class="form-control"
+				type="text"
+				name="kode_user"
+				id=""
+				required
+				maxlength="100"
+			/>
+		</div>
+		<div class="mb-3">
+			<label class="form-label" for="email">EMAIL</label>
+			<input
+				class="form-control"
+				type="email"
+				name="email"
+				id=""
+				required
+				maxlength="100"
+			/>
+		</div>
+		<div class="">
+			<label class="form-label" for="password">PASSWORD</label>
+			<input
+				class="form-control"
+				type="password"
+				name="password"
+				id=""
+				required
+				maxlength="100"
+			/>
+		</div>
 
-{% block head %}
-<title>REGISTER</title>
-{% endblock %}
-
-{% block body %}
-{% include './components/navbar.html' %}
-<h1>HALAMAN REGISTER</h1>
-
-<form method="POST" action="" class="">
-    <label for="nama">NAMA</label>
-    <input type="text" name="nama" id="" required maxlength="100">
-
-    <label for="notelp">NO TELEPON</label>
-    <input type="text" name="notelp" id="" required maxlength="100">
-
-    <label for="kode_user">USERNAME</label>
-    <input type="text" name="kode_user" id="" required maxlength="100">
-
-    <label for="email">EMAIL</label>
-    <input type="email" name="email" id="" required maxlength="100">
-
-    <label for="password">PASSWORD</label>
-    <input type="password" name="password" id="" required maxlength="100">
-
-    <button type="submit">SUBMIT</button>
-    <button type="reset">RESET</button>
-</form>
+		<div>
+			<button class="btn btn-success" type="submit">SUBMIT</button>
+			<button class="btn btn-secondary" type="reset">RESET</button>
+		</div>
+	</form>
+</div>
 {% endblock %}

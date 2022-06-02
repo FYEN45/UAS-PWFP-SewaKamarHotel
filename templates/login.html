@@ -1,25 +1,42 @@
-{% extends './components/base.html' %} 
+{% extends './components/base.html' %} {% block head %}
+<title>Login</title>
+{% endblock %} {% block body %} {% include './components/navbar.html' %}
+<div class="row login">
+	<h1>Login</h1>
+	<form method="POST" action="" class="form">
+		<div class="mb-3">
+			<label class="form-label" for="email">EMAIL</label>
+			<input
+				class="form-control"
+				type="email"
+				name="email"
+				id=""
+				required
+				maxlength="100"
+			/>
+		</div>
 
-{% block head %}
-<title>LOGIN</title>
-{% endblock %}
+		<div class="mb-3">
+			<label class="form-label" for="password">PASSWORD</label>
+			<input
+				class="form-control"
+				type="password"
+				name="password"
+				id=""
+				required
+				maxlength="100"
+			/>
+		</div>
 
-{% block body %}
-{% include './components/navbar.html' %}
+		<p class="login_linkRegister">
+			<a class="" href="{{ url_for('register') }}">Klik untuk Register</a>
+		</p>
 
-<h1>HALAMAN LOGIN</h1>
-
-<form method="POST" action="" class="">
-    <label for="email">EMAIL</label>
-    <input type="email" name="email" id="" required maxlength="100">
-
-    <label for="password">PASSWORD</label>
-    <input type="password" name="password" id="" required maxlength="100">
-
-    <button type="submit">SUBMIT</button>
-    <button type="reset">RESET</button>
-</form>
-
-<a href="{{ url_for('register') }}">REGISTER</a>
+		<div>
+			<button class="btn btn-success" type="submit">SUBMIT</button>
+			<button class="btn btn-secondary" type="reset">RESET</button>
+		</div>
+	</form>
+</div>
 
 {% endblock %}

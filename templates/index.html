@@ -1,11 +1,28 @@
 {% extends './components/base.html' %} 
 
 {% block head %}
-<title>HALAMAN HOTEL UTAMA</title>
+<title>GranDhika Hotel</title>
 {% endblock %}
 
 {% block body %}
 {% include './components/navbar.html' %}
-<h1>HALAMAN UTAMA</h1>
+
+<div class="banner row">
+    <img src="./../static/media/Home_Banner1.jpg" alt="BANNER">
+</div>
+
+<div class="slogan row">
+    <h3>Pesan langsung di 'www.grandhika-hotel.com' dapatkan keuntungan yang lebih banyak</h3>
+</div>
+
+<div class="galery row">
+    <h3>GALERY</h3>
+    <div class="d-flex row justify-content-center">
+        <img class="galery_img" src="./../static/media/Experience1.jpg" alt="Experience 1">
+        <img class="galery_img" src="./../static/media/Experience2.jpg" alt="Experience 2">
+        <img class="galery_img" src="./../static/media/Experience3.jpg" alt="Experience 3">
+        <img class="galery_img" src="./../static/media/Experience4.jpg" alt="Experience 4">
+    </div>
+</div>
 
 {% endblock %}
