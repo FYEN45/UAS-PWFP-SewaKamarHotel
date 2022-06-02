@@ -1,53 +1,50 @@
-{% extends './components/base.html' %} 
+{% extends './components/base.html' %} {% block head %}
+<title>Daftar Reservasi</title>
+{% endblock %} {% block body %} {% include './components/navbar.html' %}
+<div class="daftar row">
+<h1>DAFTAR RESERVASI</h1>
 
-{% block head %}
-<title>HALAMAN DAFTAR RESERVASI</title>
-{% endblock %}
+<div>
+	<a class="btn btn-primary" href="{{ url_for('tambahReservasi') }}">Tambah Reservasi</a>
+	<a class="btn btn-primary" href="{{ url_for('generateLaporan') }}">Generate Laporan</a>
+</div>
 
-{% block body %}
-{% include './components/navbar.html' %}
-<h1>HALAMAN DAFTAR RESERVASI</h1>
+<table class="table table-light table-striped text-center">
+	<tr>
+		<th>Kode Reservasi</th>
+		<th>Kode User</th>
+		<th>Kode Kamar</th>
+		<th>Tgl Check-In</th>
+		<th>Tgl Check-Out</th>
+		<th>Jumlah Malam</th>
+		<th>Total Biaya</th>
 
-<a href="{{ url_for('tambahReservasi') }}">Tambah Reservasi</a>
-<a href="{{ url_for('generateLaporan') }}">Generate Laporan</a>
+		<th>Status Check-In</th>
+		<th>Status Check-Out</th>
 
-<table>
-    <tr>
-        <th>Kode Reservasi</th>
-        <th>Kode User</th>
-        <th>Kode Kamar</th>
-        <th>Tgl Check-In</th>
-        <th>Tgl Check-Out</th>
-        <th>Jumlah Malam</th>
-        <th>Total Biaya</th>
+		<th>ACTION</th>
+	</tr>
 
-        <th>Status Check-In</th>
-        <th>Status Check-Out</th>
-
-        <th>ACTION</th>
-    </tr>
-    
-    {% for data in container %}
-    <tr>    
-        <td>{{ data[0] }}</td>
-        <td>{{ data[1] }}</td>
-        <td>{{ data[2] }}</td>
-        <td>{{ data[3] }}</td>
-        <td>{{ data[4] }}</td>
-        <td>{{ data[5] }}</td>
-        <td>{{ data[6] }}</td>
-        <td>{{ data[8] }}</td>
-        <td>{{ data[9] }}</td>
-        <td>
-            <!-- <a href="#">Edit</a> -->
-            <a href="checkin/{{ data[0] }}">Check-In</a>
-            <a href="checkout/{{ data[0] }}/{{ data[2] }}">Check-Out</a>
-            <a href="hapusReservasi/{{ data[0] }}">Hapus</a>
-        </td>
-    </tr>
-    {% endfor %}
-   
-    
-
+	{% for data in container %}
+	<tr>
+		<td>{{ data[0] }}</td>
+		<td>{{ data[1] }}</td>
+		<td>{{ data[2] }}</td>
+		<td>{{ data[3] }}</td>
+		<td>{{ data[4] }}</td>
+		<td>{{ data[5] }}</td>
+		<td>{{ data[6] }}</td>
+		<td>{{ data[8] }}</td>
+		<td>{{ data[9] }}</td>
+		<td>
+			<!-- <a href="#">Edit</a> -->
+			<a class="btn btn-sm btn-warning" href="checkin/{{ data[0] }}">Check-In</a>
+			<a class="btn btn-sm btn-warning" href="checkout/{{ data[0] }}/{{ data[2] }}">Check-Out</a>
+			<a class="btn btn-sm btn-danger" href="hapusReservasi/{{ data[0] }}">Hapus</a>
+		</td>
+	</tr>
+	{% endfor %}
 </table>
+</div>
+
 {% endblock %}

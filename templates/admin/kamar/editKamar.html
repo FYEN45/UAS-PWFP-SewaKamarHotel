@@ -1,33 +1,42 @@
 {% extends './components/base.html' %} 
 
 {% block head %}
-<title>EDIT KAMAR</title>
+<title>Edit Kamar</title>
 {% endblock %}
 
 {% block body %}
 {% include './components/navbar.html' %}
-<h1>HALAMAN EDIT KAMAR</h1>
+<div class="row tambah">
+<h1>EDIT KAMAR</h1>
 
 {% with data = container %}
-<form method="POST" action="" class="">
-    <label for="kode_kamar">Kode Kamar</label>
-    <input type="text" name="kode_kamar" id="" required maxlength="100" value="{{ data[0][0] }}">
-
-    <label for="nama_kamar">Nama Kamar</label>
-    <input type="text" name="nama_kamar" id="" required maxlength="100" value="{{ data[0][1] }}">
-
-    <label for="harga_kamar">Harga Kamar</label>
-    <input type="number" name="harga_kamar" id="" required min="0" value="{{ data[0][2] }}">
-
-    <label for="jumlah_kamar">Jumlah Kamar</label>
-    <input type="number" name="jumlah_kamar" id="" required min="0" value="{{ data[0][3] }}">
-
-    <label for="kamar_tersedia">Kamar Tersedia</label>
-    <input type="number" name="kamar_tersedia" id="" required min="0" value="{{ data[0][4] }}">
-
-    <button type="submit">SUBMIT</button>
-    <button type="reset">RESET</button>
+<form method="POST" action="" class="form">
+<div class="mb-3">
+    <label class="form-label" for="kode_kamar">Kode Kamar</label>
+    <input class="form-control" type="text" name="kode_kamar" id="" required maxlength="100" value="{{ data[0][0] }}" readonly>
+</div>
+<div class="mb-3">
+    <label class="form-label" for="nama_kamar">Nama Kamar</label>
+    <input class="form-control" type="text" name="nama_kamar" id="" required maxlength="100" value="{{ data[0][1] }}">
+</div>
+<div class="mb-3">
+    <label class="form-label" for="harga_kamar">Harga Kamar</label>
+    <input class="form-control" type="number" name="harga_kamar" id="" required min="0" value="{{ data[0][2] }}">
+</div>
+<div class="mb-3">
+    <label class="form-label" for="jumlah_kamar">Jumlah Kamar</label>
+    <input class="form-control" type="number" name="jumlah_kamar" id="" required min="0" value="{{ data[0][3] }}">
+</div>
+<div>
+    <label class="form-label" for="kamar_tersedia">Kamar Tersedia</label>
+    <input class="form-control" type="number" name="kamar_tersedia" id="" required min="0" value="{{ data[0][4] }}">
+</div>
+    <div>
+        <button class="btn btn-success" type="submit">SUBMIT</button>
+        <button class="btn btn-secondary" type="reset">RESET</button>
+    </div>
 </form>
+</div>
 {% endwith %}
 
 {% endblock %}

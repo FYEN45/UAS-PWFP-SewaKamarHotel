@@ -1,2 +1,7 @@
-console.log('COPYRIGHT KELOMPOK 3')
 console.log('UAS - PEMROGRAMAN WEB FRAMEWORK PYTHON')
+console.log('DIBUAT OLEH : KELOMPOK 3')
+console.log('----------------------------------------')
+console.log('FERRY GUNAWAN \t32190098')
+console.log('KELVIN CHANDRA \t32190041')
+console.log('KEVIN KUSUMA \t32190048')
+console.log('----------------------------------------')

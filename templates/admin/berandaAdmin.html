@@ -1,19 +1,23 @@
-{% extends './components/base.html' %} 
+{% extends './components/base.html' %} {% block head %}
+<title>Beranda</title>
+{% endblock %} {% block body %} {% include './components/navbar.html' %}
 
-{% block head %}
-<title>HOME</title>
-{% endblock %}
+<div class="row beranda">
 
-{% block body %}
-{% include './components/navbar.html' %}
-<div class="berandaAdmin">
-    <h1 class="row">HALAMAN HOME ADMIN</h1>
+	<div class="opsi">
+		<h1 class="">Beranda Admin</h1>
 
-    <div class="row">
-        <a href="{{ url_for('daftarUser') }}">Daftar User</a>
-        <a href="{{ url_for('daftarKamar') }}">Daftar Kamar</a>
-        <a href="{{ url_for('daftarReservasi') }}">Daftar Reservasi</a>
-    </div>
-    
+		<div class="row">
+			<a class="btn btn-primary" href="{{ url_for('daftarUser') }}"
+				>Daftar User</a
+			>
+			<a class="btn btn-primary" href="{{ url_for('daftarKamar') }}"
+				>Daftar Kamar</a
+			>
+			<a class="btn btn-primary" href="{{ url_for('daftarReservasi') }}"
+				>Daftar Reservasi</a
+			>
+		</div>
+	</div>
 </div>
 {% endblock %}

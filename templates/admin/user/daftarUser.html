@@ -1,37 +1,35 @@
-{% extends './components/base.html' %} 
-
-{% block head %}
+{% extends './components/base.html' %} {% block head %}
 <title>Daftar User</title>
-{% endblock %}
+{% endblock %} {% block body %} {% include './components/navbar.html' %}
 
-{% block body %}
-{% include './components/navbar.html' %}
-<h1>HALAMAN DAFTAR USER</h1>
+<div class="daftar row">
+	<h1>DAFTAR USER</h1>
 
-<table>
-    <tr>
-        <th>Kode User</th>
-        <th>Nama</th>
-        <th>No Telepon</th>
-        <th>Email</th>
-        <th>Status</th>
-        <th>ACTION</th>
-    </tr>
+	<table class="table table-light table-striped text-center">
+		<tr>
+			<th>Kode User</th>
+			<th>Nama</th>
+			<th>No Telepon</th>
+			<th>Email</th>
+			<th>Status</th>
+			<th>ACTION</th>
+		</tr>
 
-    {% for data in container %}
-    <tr>
-        <td>{{ data[0] }}</td>
-        <td>{{ data[1] }}</td>
-        <td>{{ data[2] }}</td>
-        <td>{{ data[3] }}</td>
-        <td>{{ data[5] }}</td>
-        <td>
-            <!-- <a href="#">Edit</a>
+		{% for data in container %}
+		<tr>
+			<td>{{ data[0] }}</td>
+			<td>{{ data[1] }}</td>
+			<td>{{ data[2] }}</td>
+			<td>{{ data[3] }}</td>
+			<td>{{ data[5] }}</td>
+			<td>
+				<!-- <a href="#">Edit</a>
             <a href="#">Hapus</a> -->
-            <a href="/sendEmail/{{ data[3] }}">Kirim Email</a>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+				<a class="btn btn-sm btn-warning" href="/sendEmail/{{ data[3] }}">Kirim Email</a>
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
 
 {% endblock %}

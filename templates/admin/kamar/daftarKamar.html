@@ -1,38 +1,35 @@
-{% extends './components/base.html' %} 
-
-{% block head %}
+{% extends './components/base.html' %} {% block head %}
 <title>Daftar Kamar</title>
-{% endblock %}
+{% endblock %} {% block body %} {% include './components/navbar.html' %}
+<div class="daftar row">
+	<h1>DAFTAR KAMAR</h1>
+	<div>
+		<a class="btn btn-primary" href="tambahKamar">Tambah Kamar</a>
+	</div>
+	<table class="table table-light table-striped text-center">
+		<tr>
+			<th>Kode Kamar</th>
+			<th>Nama Kamar</th>
+			<th>Harga Kamar</th>
+			<th>Jumlah Kamar</th>
+			<th>Kamar Tersedia</th>
+			<th>ACTION</th>
+		</tr>
 
-{% block body %}
-{% include './components/navbar.html' %}
-<h1>HALAMAN DAFTAR KAMAR</h1>
-
-<a href="tambahKamar">Tambah Kamar</a>
-
-<table>
-    <tr>
-        <th>Kode Kamar</th>
-        <th>Nama Kamar</th>
-        <th>Harga Kamar</th>
-        <th>Jumlah Kamar</th>
-        <th>Kamar Tersedia</th>
-        <th>ACTION</th>
-    </tr>
-
-    {% for data in container %}
-    <tr>
-        <td>{{ data[0] }}</td>
-        <td>{{ data[1] }}</td>
-        <td>{{ data[2] }}</td>
-        <td>{{ data[3] }}</td>
-        <td>{{ data[4] }}</td>
-        <td>
-            <a href="editKamar/{{ data[0] }}">Edit</a>
-            <a href="hapusKamar/{{ data[0] }}">Hapus</a>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+		{% for data in container %}
+		<tr>
+			<td>{{ data[0] }}</td>
+			<td>{{ data[1] }}</td>
+			<td>{{ data[2] }}</td>
+			<td>{{ data[3] }}</td>
+			<td>{{ data[4] }}</td>
+			<td>
+				<a class="btn btn-sm btn-warning" href="editKamar/{{ data[0] }}">Edit</a>
+				<a class="btn btn-sm btn-danger" href="hapusKamar/{{ data[0] }}">Hapus</a>
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
 
 {% endblock %}

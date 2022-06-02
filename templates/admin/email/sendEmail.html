@@ -1,27 +1,37 @@
 {% extends './components/base.html' %} 
 
 {% block head %}
-<title>SEND EMAIL</title>
+<title>Kirim Email</title>
 {% endblock %}
 
 {% block body %}
 {% include './components/navbar.html' %}
-<h1>HALAMAN SEND EMAIL</h1>
+<div class="row email">
+<h1>KIRIM EMAIL</h1>
 
-<form action="" method="post">
-    <label for="sender">Nama Pengirim</label>
-    <input type="text" name="sender" id="" required maxlength="100">
+<form action="" method="post" class="form">
+    <div>
+    <label class="form-label" for="sender">Nama Pengirim</label>
+    <input class="form-control" type="text" name="sender" id="" required maxlength="100">
+</div>
 
-    <label for="subject">Subject</label>
-    <input type="text" name="subject" id="" required maxlength="500">
+<div>
+    <label class="form-label" for="subject">Subject</label>
+    <input class="form-control" type="text" name="subject" id="" required maxlength="500">
+</div>
 
-    <label for="receiver">Penerima</label>
-    <input type="email" name="receiver" id="" required maxlength="100" value="{{ container }}">
+<div>
+    <label class="form-label" for="receiver">Penerima</label>
+    <input class="form-control" type="email" name="receiver" id="" required maxlength="100" value="{{ container }}" readonly>
+</div>
 
-    <label for="isiPesan">Isi Pesan</label>
-    <textarea name="isiPesan" id="" cols="30" rows="10"></textarea>
-
-    <button type="submit">KIRIM</button>
+<div>
+    <label class="form-label" for="isiPesan">Isi Pesan</label>
+    <textarea class="form-control" name="isiPesan" id="" cols="30" rows="10"></textarea>
+</div>
+    
+    <button class="btn btn-success" type="submit">KIRIM</button>
 </form>
+</div>
 
 {% endblock %}

@@ -2,21 +2,37 @@
 <div class="navbar row">
 	<div class="navbar_logo col-4 d-flex align-items-center">
 		<a href="{{ url_for('index') }}">
-			<img src="./../../static/media/Logo_Hotel.png" alt="LOGO HOTEL" srcset="">
+			<img
+				src="./../../static/media/Logo_Hotel.png"
+				alt="LOGO HOTEL"
+				srcset=""
+			/>
 		</a>
-	</div>
 
-	<div class="navbar_link col-8 d-flex justify-content-end align-items-center">
 		{% if session['nama_user'] %}
-			<a class="" href="{{ url_for('home') }}">HOME</a>
-			<a class="ms-4" href="{{ url_for('tentangKami') }}">TENTANG KAMI</a>
-			<a class="ms-4" href="{{ url_for('logout') }}">LOGOUT</a>
-		{% else %}
-			<a class="" href="{{ url_for('tentangKami') }}">TENTANG KAMI</a>
-			<a class="ms-4" href="{{ url_for('login') }}">LOGIN</a>
+		<div class="container">
+			<span class="userIdentity row">Logged-in as :</span>
+			<span class="userIdentity row"
+				>{{ session['nama_user'] }} ({{ session['status']}})</span
+			>
+		</div>
 		{% endif %}
 	</div>
+
+	<div
+		class="navbar_link col-8 d-flex justify-content-end align-items-center"
+	>
+		{% if session['nama_user'] %}
+		<a class="" href="{{ url_for('home') }}">BERANDA</a>
+		<a class="ms-4" href="{{ url_for('tentangKami') }}">TENTANG KAMI</a>
+		<a class="ms-4" href="{{ url_for('logout') }}">LOGOUT</a>
+		{% else %}
+		<a class="" href="{{ url_for('tentangKami') }}">TENTANG KAMI</a>
+		<a class="ms-4" href="{{ url_for('login') }}">LOGIN</a>
+		{% endif %}
+	</div>
+
+	{% include './components/flashMessage.html' %}
 </div>
 
-{% include './components/flashMessage.html' %}
 {% endblock %}

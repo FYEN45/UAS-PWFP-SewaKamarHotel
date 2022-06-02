@@ -22,6 +22,10 @@ body {
     letter-spacing: 1px;
 }
 
+th {
+    font-weight: 800;
+}
+
 .root {
     box-sizing: border-box;
 }
@@ -41,6 +45,13 @@ body {
 
     font-weight: 400;
     font-size: 1.35em;
+}
+
+.userIdentity {
+    margin-left: 2em;
+    color: white;
+    font-size: 1.1em;
+    margin-bottom: 0.2em;
 }
 
 .footer {
@@ -114,7 +125,6 @@ body {
     padding-left: 0.5em;
     padding-right: 0.5em;
     margin: 0 !important;
-    
 }
 
 .tentangKami h1 {
@@ -163,7 +173,8 @@ body {
     padding-left: 0.5em;
 }
 
-.form {
+.form,
+.opsi {
     max-width: 400px;
     margin-left: auto;
     margin-right: auto;
@@ -179,7 +190,11 @@ body {
 }
 
 .login,
-.register {
+.register,
+.beranda,
+.daftar,
+.tambah,
+.email {
     background-color: #F9F3EE;
 }
 
@@ -190,12 +205,27 @@ body {
 }
 
 .login h1,
-.register h1{
+.register h1,
+.beranda h1,
+.daftar h1,
+.tambah h1,
+.email h1{
     font-size: 2em;
     font-weight: 600;
     text-align: center;
     padding-top: 1.2em;
+    margin-bottom: 0.25em;
 }
+
+.beranda a {
+    margin-bottom: 0.8em;
+    margin-top: 0.7em;
+}
+
+.daftar > div > a {
+    margin-bottom: 1em;
+}
+
 
 
 

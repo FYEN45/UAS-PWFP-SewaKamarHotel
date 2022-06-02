@@ -1,27 +1,59 @@
-{% extends './components/base.html' %} 
+{% extends './components/base.html' %} {% block head %}
+<title>Tambah Kamar</title>
+{% endblock %} {% block body %} {% include './components/navbar.html' %}
+<div class="row tambah">
+	<h1>TAMBAH KAMAR</h1>
 
-{% block head %}
-<title>TAMBAH KAMAR</title>
-{% endblock %}
+	<form method="POST" action="" class="form">
+		<div class="mb-3">
+			<label class="form-label" for="kode_kamar">Kode Kamar</label>
+			<input
+				class="form-control"
+				type="text"
+				name="kode_kamar"
+				id=""
+				required
+				maxlength="100"
+			/>
+		</div>
 
-{% block body %}
-{% include './components/navbar.html' %}
-<h1>HALAMAN TAMBAH KAMAR</h1>
-
-<form method="POST" action="" class="">
-    <label for="kode_kamar">Kode Kamar</label>
-    <input type="text" name="kode_kamar" id="" required maxlength="100">
-
-    <label for="nama_kamar">Nama Kamar</label>
-    <input type="text" name="nama_kamar" id="" required maxlength="100">
-
-    <label for="harga_kamar">Harga Kamar</label>
-    <input type="number" name="harga_kamar" id="" required min="0">
-
-    <label for="jumlah_kamar">Jumlah Kamar</label>
-    <input type="number" name="jumlah_kamar" id="" required min="0">
-
-    <button type="submit">SUBMIT</button>
-    <button type="reset">RESET</button>
-</form>
+		<div class="mb-3">
+			<label class="form-label" for="nama_kamar">Nama Kamar</label>
+			<input
+				class="form-control"
+				type="text"
+				name="nama_kamar"
+				id=""
+				required
+				maxlength="100"
+			/>
+		</div>
+		<div class="mb-3">
+			<label class="form-label" for="harga_kamar">Harga Kamar</label>
+			<input
+				class="form-control"
+				type="number"
+				name="harga_kamar"
+				id=""
+				required
+				min="0"
+			/>
+		</div>
+		<div class="">
+			<label class="form-label" for="jumlah_kamar">Jumlah Kamar</label>
+			<input
+				class="form-control"
+				type="number"
+				name="jumlah_kamar"
+				id=""
+				required
+				min="0"
+			/>
+		</div>
+		<div>
+			<button class="btn btn-success" type="submit">SUBMIT</button>
+			<button class="btn btn-secondary" type="reset">RESET</button>
+		</div>
+	</form>
+</div>
 {% endblock %}

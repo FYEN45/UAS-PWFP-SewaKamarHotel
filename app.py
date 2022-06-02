@@ -104,7 +104,7 @@ def daftarKamar():
                 return render_template('admin/kamar/daftarKamar.html', container = hasil)
             except (MySQLdb.Error) as err:
                 # Menangkap error dan menampilkan pesan gagal
-                flash('Gagal menambahkan kamar! %d: %s' % (err.args[0], err.args[1]))
+                flash('Gagal menampilkan daftar kamar! %d: %s' % (err.args[0], err.args[1]))
                 return redirect('/home')
     
     return redirect('/login')
@@ -237,8 +237,7 @@ def daftarReservasi():
 @app.route('/tambahReservasi', methods=['GET', 'POST'])
 def tambahReservasi():
     if 'nama_user' in session:
-        if session['status'] == "ADMIN":
-            if (request.method == 'POST'):
+        if (request.method == 'POST'):
                 hasil = request.form
                 kodeReservasi = hasil['kode_reservasi']
                 kodeUser = hasil['kode_user']
@@ -248,6 +247,7 @@ def tambahReservasi():
 
                 return redirect('/konfirmasiReservasi/{}/{}/{}/{}/{}'.format(kodeReservasi, kodeUser, kodeKamar, tglCheckin, jumlahMalam))
 
+        if session['status'] == "ADMIN":
             try: 
                 cursor = mysql.connection.cursor()
                 cursor.execute('SELECT * FROM kamar')
@@ -265,16 +265,6 @@ def tambahReservasi():
                 return redirect('/daftarReservasi')
         
         elif session['status'] == "CLIENT":
-            if (request.method == 'POST'):
-                hasil = request.form
-                kodeReservasi = hasil['kode_reservasi']
-                kodeUser = hasil['kode_user']
-                kodeKamar = hasil['kode_kamar']
-                tglCheckin = hasil['tglCheckin']
-                jumlahMalam = hasil['jumlah_malam']
-
-                return redirect('/konfirmasiReservasi/{}/{}/{}/{}/{}'.format(kodeReservasi, kodeUser, kodeKamar, tglCheckin, jumlahMalam))
-
             try: 
                 cursor = mysql.connection.cursor()
                 cursor.execute('SELECT * FROM kamar')
@@ -334,10 +324,10 @@ def konfirmasiReservasi(kodeReservasi, kodeUser, kodeKamar, tglCheckin, jumlahMa
 
         cursor = mysql.connection.cursor()
         cursor.execute('SELECT * FROM kamar WHERE kode_kamar="{}"'.format(kodeKamar))
-        kamar = cursor.fetchall()
+        kamars = cursor.fetchall()
         cursor.close()
-
-        hargaMalam = kamar[0][2]
+    
+        hargaMalam = kamars[0][2] # Line ini error? Tapi website jalan tanpa masalah...
 
         data = [kodeReservasi, kodeUser, kodeKamar, tglCheckin, jumlahMalam, hargaMalam]
         return render_template('admin/reservasi/konfirmasiReservasi.html', container = data)
@@ -488,7 +478,7 @@ def login():
 
         except (MySQLdb.Error) as err:
                 # Menangkap error dan memberikan pesan gagal
-                flash('Gagal checkin! %d: %s' % (err.args[0], err.args[1]))
+                flash('Gagal melakukan Login! %d: %s' % (err.args[0], err.args[1]))
                 return redirect('/login')
             
         if (len(hasil) > 0):
@@ -503,7 +493,7 @@ def login():
             return redirect('/login')
         else:
             # Apabila tidak ada data username dan password, verfikasi gagal
-            flash('Username atau Password salah!')
+            flash('Email atau Password salah!')
             return render_template('login.html')
     
     else:

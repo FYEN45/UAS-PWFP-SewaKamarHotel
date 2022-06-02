@@ -1,43 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>LAPORAN RESERVASI</h1>
-    <h2>Dicetak oleh : {{ user }}</h2>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<!-- BOOTSTRAP CSS -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+			crossorigin="anonymous"
+		/>
 
-    <table>
-        <tr>
-            <th>Kode Reservasi</th>
-            <th>Kode User</th>
-            <th>Kode Kamar</th>
-            <th>Tgl Check-In</th>
-            <th>Tgl Check-Out</th>
-            <th>Jumlah Malam</th>
-            <th>Total Biaya</th>
-        </tr>
+		<!-- STYLE DESAIN SENDIRI -->
+		<style>
+			body {
+				font-size: 14px;
+				color: black;
+				letter-spacing: 2px;
+                line-height: 10px;
+			}
 
-    {% for data in container %}
-    <tr>    
-        <td>{{ data[0] }}</td>
-        <td>{{ data[1] }}</td>
-        <td>{{ data[2] }}</td>
-        <td>{{ data[3] }}</td>
-        <td>{{ data[4] }}</td>
-        <td>{{ data[5] }}</td>
-        <td>{{ data[6] }}</td>
-    </tr>
-    {% endfor %}
-    </table>
-</body>
+            h1 {
+                font-weight: 600;
+            }
 
-<script>
+            p {
+                font-size: 16px;
+            }
+		</style>
 
-</script>
+		<title>Laporan Reservasi</title>
+	</head>
+	<body>
+		<div class="container">
+			<div class="mb-4">
+				<div class="">
+					<h1><b>LAPORAN RESERVASI</b></h1>
+					<p id="date"></p>
+                    <br>
+				</div>
+
+				<div class="mb-2">
+					<h1>PT.GrandDhika Hotel</h1>
+					<p>Jl. Iskandarsyah Raya No. 65 Jakarta 12160</p>
+					<p><b>Telp:</b> (62-21) 29127788</p>
+					<p><b>Fax:</b> (62-21) 29126677</p>
+					<p><b>Email:</b> info@grandhika-hotel.com</p>
+					<p><i>www.grandhika-hotel.com</i></p>
+				</div>
+			</div>
+
+			<div class="row mt-3">
+				<table class="table table-bordered text-center">
+					<tr>
+						<th>Kode Reservasi</th>
+						<th>Kode User</th>
+						<th>Kode Kamar</th>
+						<th>Tgl Check-In</th>
+						<th>Tgl Check-Out</th>
+						<th>Jumlah Malam</th>
+						<th>Total Biaya</th>
+					</tr>
+
+					{% for data in container %}
+					<tr>
+						<td>{{ data[0] }}</td>
+						<td>{{ data[1] }}</td>
+						<td>{{ data[2] }}</td>
+						<td>{{ data[3] }}</td>
+						<td>{{ data[4] }}</td>
+						<td>{{ data[5] }}</td>
+						<td>{{ data[6] }}</td>
+					</tr>
+					{% endfor %}
+				</table>
+			</div>
+
+			<br />
+			<p><b>Dicetak oleh :</b> {{ session['nama_user'] }}</p>
+		</div>
+	</body>
+
+	<!-- BOOTSTRAP JS -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+		crossorigin="anonymous"
+	></script>
+	<script>
+		document.getElementById("date").innerText = new Date();
+	</script>
 </html>
-
-

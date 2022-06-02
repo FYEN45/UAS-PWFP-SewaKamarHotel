@@ -6,31 +6,64 @@
 
 {% block body %}
 {% include './components/navbar.html' %}
-<h1>HALAMAN TAMBAH RESERVASI CLIENT</h1>
-
-<form method="POST" action="" class="">
-    <label for="kode_reservasi">Kode Reservasi</label>
-    <input type="text" name="kode_reservasi" id="" required maxlength="100">
-
-    <label for="kode_user">Kode User</label>
-    <input type="text" name="kode_user" id="" required maxlength="100" value="{{ session['kode_user'] }}">
-
-    <label for="kode_kamar">Kode Kamar</label>
-    <select class="" id="" name="kode_kamar" required>
-        {% for kamar in container[1] %}
-            <option value={{ kamar[0] }}> {{ kamar[0] }} - {{ kamar[1] }}</option>
-        {% endfor %}
-    </select>
-
-    <label for="tglCheckin">Tanggal Check-In</label>
-    <input type="date" name="tglCheckin" id="input_checkin" required>
+    <div class="row tambah">
+        <h1>TAMBAH RESERVASI</h1>
     
-    <label for="jumlah_malam">Jumlah Malam</label>
-    <input type="number" name="jumlah_malam" id="input_jumlah_malam" required min="1">
-
-    <button type="submit">SUBMIT</button>
-    <button type="reset">RESET</button>
-</form>
+        <form method="POST" action="" class="form">
+            <div class="mb-3">
+                <label class="form-label" for="kode_reservasi"
+                    >Kode Reservasi</label
+                >
+                <input
+                    class="form-control"
+                    type="text"
+                    name="kode_reservasi"
+                    id=""
+                    required
+                    maxlength="100"
+                />
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="kode_user">Kode User</label>
+    <input  class="form-control" type="text" name="kode_user" id="" required maxlength="100" value="{{ session['kode_user'] }}" readonly>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="kode_kamar">Kode Kamar</label>
+                <select class="form-control" id="" name="kode_kamar" required>
+                    {% for kamar in container[1] %}
+                    <option value="{{ kamar[0] }}">
+                        {{ kamar[0] }} - {{ kamar[1] }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="tglCheckin">Tanggal Check-In</label>
+                <input
+                    class="form-control"
+                    type="date"
+                    name="tglCheckin"
+                    id="input_checkin"
+                    required
+                />
+            </div>
+            <div>
+                <label class="form-label" for="jumlah_malam">Jumlah Malam</label>
+                <input
+                    class="form-control"
+                    type="number"
+                    name="jumlah_malam"
+                    id="input_jumlah_malam"
+                    required
+                    min="1"
+                />
+            </div>
+            <div>
+                <button class="btn btn-success" type="submit">SUBMIT</button>
+                <button class="btn btn-secondary" type="reset">RESET</button>
+            </div>
+        </form>
+    </div>
 
 <script>
     let jumlahMalam = document.getElementById("input_jumlah_malam");

@@ -1,11 +1,21 @@
 {% extends './components/base.html' %} 
 
 {% block head %}
-<title>HOME</title>
+<title>Beranda</title>
 {% endblock %}
 
 {% block body %}
 {% include './components/navbar.html' %}
-<h1>HALAMAN HOME CLIENT</h1>
+<div class="row beranda">
+	<div class="opsi">
+		<h1 class="">Beranda Client</h1>
+
+		<div class="row">
+			<a class="btn btn-primary" href="{{ url_for('tambahReservasi') }}"
+				>Pesan Kamar</a
+			>
+		</div>
+	</div>
+</div>
 
 {% endblock %}
