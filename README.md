@@ -3,7 +3,7 @@
 - GitHub (opsional)
 - XAMPP
 - Python
-- wkHTMLtoPDF ``https://wkhtmltopdf.org/downloads.html``
+- wkHTMLtoPDF (64 BIT) ``https://wkhtmltopdf.org/downloads.html``
 
 # Cara untuk mempersiapkan dan menjalankan project
 - Pull dari github / download project
