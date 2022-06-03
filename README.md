@@ -22,8 +22,8 @@
 
 # Login Website
 Untuk login website bisa menggunakan,
-email = 'admin@gmail.com'
-password = 'admin123'
+- email = 'admin@gmail.com'
+- password = 'admin123'
 
 Source :
 - Pembahasan Import & Export Requirement Virtual Environment
