@@ -20,10 +20,15 @@
 - Buka http://localhost/phpmyadmin
 - Import file sql ke Database anda
 
-# Login Website
-Untuk login website bisa menggunakan,
+# Login Website sebagai Admin
+Untuk login website sebagai admin bisa menggunakan,
 - email = 'admin@gmail.com'
 - password = 'admin123'
+
+# Login Website sebagai User
+Untuk login website sebagai user bisa menggunakan,
+- email = 'user@gmail.com'
+- password = 'user123'
 
 Source :
 - Pembahasan Import & Export Requirement Virtual Environment
