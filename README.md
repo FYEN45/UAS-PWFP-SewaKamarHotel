@@ -22,7 +22,7 @@
 
 # Login Website
 Untuk login website bisa menggunakan,
-username = 'admin'
+email = 'admin@gmail.com'
 password = 'admin123'
 
 Source :
