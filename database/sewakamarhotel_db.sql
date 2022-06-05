@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.3
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 02, 2022 at 10:17 AM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.28
+-- Waktu pembuatan: 03 Jun 2022 pada 07.43
+-- Versi server: 10.4.18-MariaDB
+-- Versi PHP: 8.0.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -26,7 +26,7 @@ USE `sewakamarhotel_db`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kamar`
+-- Struktur dari tabel `kamar`
 --
 
 CREATE TABLE `kamar` (
@@ -38,16 +38,19 @@ CREATE TABLE `kamar` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `kamar`
+-- Dumping data untuk tabel `kamar`
 --
 
 INSERT INTO `kamar` (`kode_kamar`, `nama_kamar`, `harga_kamar`, `jumlah_kamar`, `kamar_tersedia`) VALUES
-('KAMAR1', 'KAMAR NOMOR 123', 10000, 10, 3);
+('RC01', 'Grandhika Suite', 1500000, 10, 7),
+('RC02', 'Grandhika Premiere', 1000000, 15, 13),
+('RC03', 'Executive Deluxe', 750000, 20, 18),
+('RC04', 'Deluxe', 500000, 50, 48);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `reservasi`
+-- Struktur dari tabel `reservasi`
 --
 
 CREATE TABLE `reservasi` (
@@ -61,21 +64,23 @@ CREATE TABLE `reservasi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `reservasi`
+-- Dumping data untuk tabel `reservasi`
 --
 
 INSERT INTO `reservasi` (`kode_reservasi`, `kode_user`, `kode_kamar`, `tgl_checkin`, `tgl_checkout`, `jumlah_malam`, `total_biaya`) VALUES
-('awdadawda', 'user', 'KAMAR1', '2022-06-02', '2022-06-03', 1, 10000),
-('RES1', 'user', 'KAMAR1', '2022-06-01', '2022-06-02', 1, 10000),
-('RES2', 'user', 'KAMAR1', '2022-06-01', '2022-06-13', 12, 120000),
-('RES3', 'user', 'KAMAR1', '2022-06-01', '2022-10-02', 123, 1230000),
-('ressssss', 'user', 'KAMAR1', '2022-06-02', '2022-06-14', 12, 120000),
-('tes1234', 'user', 'KAMAR1', '2022-06-02', '2022-06-03', 1, 10000);
+('AR01', 'lixxx', 'RC01', '2022-06-03', '2022-06-05', 2, 3000000),
+('AR02', 'muel', 'RC02', '2022-06-15', '2022-06-20', 5, 5000000),
+('AR03', 'reyy', 'RC03', '2022-06-03', '2022-06-04', 1, 750000),
+('AR04', 'xzandel', 'RC04', '2022-06-10', '2022-06-13', 3, 1500000),
+('AR05', 'lixxx', 'RC02', '2022-06-25', '2022-06-30', 5, 5000000),
+('AR06', 'muel', 'RC01', '2022-06-19', '2022-06-22', 3, 4500000),
+('AR07', 'xzandel', 'RC03', '2022-06-05', '2022-06-07', 2, 1500000),
+('AR08', 'reyy', 'RC04', '2022-06-03', '2022-06-06', 3, 1500000);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `statuscheck`
+-- Struktur dari tabel `statuscheck`
 --
 
 CREATE TABLE `statuscheck` (
@@ -85,21 +90,23 @@ CREATE TABLE `statuscheck` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `statuscheck`
+-- Dumping data untuk tabel `statuscheck`
 --
 
 INSERT INTO `statuscheck` (`kode_reservasi`, `isCheckin`, `isCheckout`) VALUES
-('awdadawda', 'NO', 'NO'),
-('RES1', 'YES', 'YES'),
-('RES2', 'YES', 'YES'),
-('RES3', 'YES', 'YES'),
-('ressssss', 'NO', 'NO'),
-('tes1234', 'NO', 'NO');
+('AR01', 'YES', 'NO'),
+('AR02', 'NO', 'NO'),
+('AR03', 'YES', 'NO'),
+('AR04', 'NO', 'NO'),
+('AR05', 'NO', 'NO'),
+('AR06', 'NO', 'NO'),
+('AR07', 'NO', 'NO'),
+('AR08', 'YES', 'NO');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Struktur dari tabel `user`
 --
 
 CREATE TABLE `user` (
@@ -112,26 +119,32 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `user`
+-- Dumping data untuk tabel `user`
 --
 
 INSERT INTO `user` (`kode_user`, `nama`, `no_telepon`, `email`, `password`, `status`) VALUES
 ('admin', 'Admin', '081234567890', 'admin@gmail.com', 'admin123', 'ADMIN'),
 ('ferrygun88', 'Ferry Gunawan', '081297507252', 'ferrygun88@gmail.com', 'f3rry123', 'ADMIN'),
-('user', 'User', '081234567890', 'user@gmail.com', 'user123', 'CLIENT');
+('keruvin', 'Kelvin Chandra', '081212305860', 'kelvinchandra799@gmail.com', 'chandra123', 'ADMIN'),
+('lixxx', 'Felix Setiawan', '082111211221', 'felixsetiawan41@gmail.com', 'setiawan123', 'CLIENT'),
+('muel', 'Samuel Sulianto', '081285603610', 'samj8148@gmail.com', 'sulianto123', 'CLIENT'),
+('platykus', 'Kevin Kusuma', '081314845533', 'kusumakevin09@gmail.com', 'kuskus123', 'ADMIN'),
+('reyy', 'Reynaldo Krisno', '0895331059723', 'reynaldokrisno21@gmail.com', 'aldo123', 'CLIENT'),
+('user', 'User', '081234567890', 'user@gmail.com', 'user123', 'CLIENT'),
+('xzandel', 'Christopher Wiliam Saroinsong', '085959555495', 'saroinsong22@gmail.com', 'toper123', 'CLIENT');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `kamar`
+-- Indeks untuk tabel `kamar`
 --
 ALTER TABLE `kamar`
   ADD PRIMARY KEY (`kode_kamar`);
 
 --
--- Indexes for table `reservasi`
+-- Indeks untuk tabel `reservasi`
 --
 ALTER TABLE `reservasi`
   ADD PRIMARY KEY (`kode_reservasi`),
@@ -139,31 +152,31 @@ ALTER TABLE `reservasi`
   ADD KEY `kode_user` (`kode_user`);
 
 --
--- Indexes for table `statuscheck`
+-- Indeks untuk tabel `statuscheck`
 --
 ALTER TABLE `statuscheck`
   ADD PRIMARY KEY (`kode_reservasi`);
 
 --
--- Indexes for table `user`
+-- Indeks untuk tabel `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`kode_user`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `reservasi`
+-- Ketidakleluasaan untuk tabel `reservasi`
 --
 ALTER TABLE `reservasi`
   ADD CONSTRAINT `reservasi_ibfk_1` FOREIGN KEY (`kode_kamar`) REFERENCES `kamar` (`kode_kamar`),
   ADD CONSTRAINT `reservasi_ibfk_2` FOREIGN KEY (`kode_user`) REFERENCES `user` (`kode_user`);
 
 --
--- Constraints for table `statuscheck`
+-- Ketidakleluasaan untuk tabel `statuscheck`
 --
 ALTER TABLE `statuscheck`
   ADD CONSTRAINT `statuscheck_ibfk_1` FOREIGN KEY (`kode_reservasi`) REFERENCES `reservasi` (`kode_reservasi`);
